@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hunter Team - Professional SMS Portal</title>
+    <style>
+        :root {
+            --bg-body: #0a1118;
+            --bg-card: #111d27;
+            --bg-subcard: #0c1620;
+            --text-main: #ffffff;
+            --text-muted: #8492a6;
+            --accent-green: #22c55e;
+            --accent-cyan: #06b6d4;
+            --border-color: #1a2a38;
+        }
+
+        .light-mode {
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-subcard: #f1f5f9;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 1. LOGIN SCREEN */
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: #111d27;
+            border: 1px solid #1a2a38;
+            border-radius: 16px;
+            padding: 28px 20px;
+            width: 100%;
+            max-width: 360px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            text-align: center;
+        }
+
+        .login-title {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+
+        .login-title span { color: var(--accent-green); }
+
+        .login-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 22px;
+        }
+
+        .field-group {
+            margin-bottom: 14px;
+            text-align: left;
+        }
+
+        .field-lbl {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .login-input {
+            width: 100%;
+            background: #0c1620;
+            border: 1.5px solid #1a2a38;
+            border-radius: 10px;
+            padding: 12px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 700;
+            outline: none;
+        }
+
+        .login-input.has-eye {
+            padding-right: 44px;
+        }
+
+        .login-input:focus {
+            border-color: var(--accent-green);
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 12px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--text-muted);
+            user-select: none;
+        }
+
+        .btn-submit-login {
+            width: 100%;
+            background: var(--accent-green);
+            color: #ffffff;
+            border: none;
+            padding: 13px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .login-error-msg {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid #ef4444;
+            color: #fca5a5;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 9px;
+            border-radius: 8px;
+            margin-top: 14px;
+            display: none;
+        }
+
+        /* 2. MAIN DASHBOARD */
+        #portalDashboard {
+            display: none;
+            padding: 10px 12px 85px;
+        }
+
+        .top-navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
+        .brand-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-icon {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .brand-logo {
+            font-size: 19px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .brand-logo span { color: var(--accent-green); }
+
+        .creator-badge {
+            text-align: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--accent-green);
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .page-title-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 900;
+        }
+
+        .btn-refresh {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .tab-view { display: none; }
+        .tab-view.active { display: block; }
+
+        /* Today's SMS Banner */
+        .live-sms-banner {
+            background: linear-gradient(135deg, #103444 0%, #0c2734 100%);
+            border: 1px solid #14495f;
+            border-radius: 14px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .banner-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: #67e8f9;
+            text-transform: uppercase;
+        }
+
+        .banner-count {
+            font-size: 38px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin: 2px 0;
+        }
+
+        .banner-sub { font-size: 11px; color: #a5f3fc; }
+
+        .live-tag {
+            background: #08202c;
+            color: var(--accent-green);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 800;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+        }
+
+        /* Ranges Section */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .section-title { font-size: 16px; font-weight: 800; }
+        .section-subtitle { font-size: 11px; color: var(--text-muted); }
+
+        .active-pill {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--accent-green);
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        /* Range Card */
+        .range-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .range-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
+        .range-name {
+            font-size: 16px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .avail-badge {
+            background: #064e3b;
+            color: #34d399;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+
+        .range-sub { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+
+        .open-link {
+            font-size: 12px;
+            color: var(--accent-cyan);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--border-color);
+            padding-top: 10px;
+        }
+
+        /* Range Detail View */
+        .details-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .btn-ctrl {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .range-detail-title { font-size: 15px; font-weight: 800; }
+
+        /* Digit Selector */
+        .digit-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+
+        .digit-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .digit-title { font-size: 12px; font-weight: 700; }
+        .digit-btn-group { display: flex; gap: 6px; }
+
+        .btn-digit {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-subcard);
+            color: var(--text-main);
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .btn-digit.active {
+            background: var(--accent-green);
+            color: #ffffff;
+            border-color: var(--accent-green);
+        }
+
+        .digit-preview { font-size: 11px; color: var(--text-muted); }
+
+        /* Number Row */
+        .num-row {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .num-val { font-size: 15px; font-weight: 800; letter-spacing: 0.5px; }
+
+        .num-new {
+            background: #b45309;
+            color: #fef3c7;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 5px;
+            border-radius: 4px;
+            margin-left: 6px;
+        }
+
+        .num-right { display: flex; align-items: center; gap: 8px; }
+
+        .num-limit {
+            background: rgba(6, 182, 212, 0.15);
+            color: var(--accent-cyan);
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 7px;
+            border-radius: 6px;
+        }
+
+        .btn-copy-action {
+            background: #1a2a38;
+            border: 1px solid #2a4054;
+            color: #ffffff;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            min-width: 65px;
+        }
+
+        .num-row.copied {
+            background: rgba(220, 38, 38, 0.18);
+            border-color: #dc2626;
+        }
+
+        .num-row.copied .num-val { color: #f87171; }
+
+        .num-row.copied .btn-copy-action {
+            background: #dc2626;
+            border-color: #dc2626;
+            color: #ffffff;
+        }
+
+        /* INBOX VIEW */
+        .triplet-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .stat-cube {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 8px 4px;
+            text-align: center;
+        }
+
+        .stat-cube .title { font-size: 9px; font-weight: 800; color: var(--text-muted); }
+        .stat-cube .val { font-size: 18px; font-weight: 900; color: #f87171; margin: 2px 0; }
+        .stat-cube .sub { font-size: 9px; color: var(--text-muted); }
+
+        .msg-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .msg-top { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 800; }
+        .msg-route { font-size: 11px; color: var(--text-muted); }
+
+        .otp-badge {
+            background: linear-gradient(135deg, #065f46, #047857);
+            color: #ffffff;
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            padding: 8px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(4, 120, 87, 0.3);
+        }
+
+        .msg-time { font-size: 11px; color: var(--text-muted); text-align: center; }
+
+        /* ALLOCATE VIEW */
+        .form-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px;
+        }
+
+        .form-label { font-size: 11px; font-weight: 800; color: var(--accent-green); margin-bottom: 6px; }
+
+        .form-input {
+            width: 100%;
+            background: var(--bg-subcard);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            color: var(--text-main);
+            font-size: 13px;
+            font-weight: 700;
+            outline: none;
+            margin-bottom: 12px;
+        }
+
+        .btn-alloc {
+            width: 100%;
+            background: var(--accent-green);
+            color: #ffffff;
+            border: none;
+            padding: 11px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        /* LEADERBOARD VIEW */
+        .podium-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr 1fr;
+            gap: 6px;
+            align-items: end;
+            margin-bottom: 16px;
+        }
+
+        .podium-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px 4px;
+            text-align: center;
+        }
+
+        .podium-box.first {
+            border-color: #eab308;
+            background: linear-gradient(180deg, rgba(234, 179, 8, 0.12), var(--bg-card));
+        }
+
+        .pod-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #0284c7;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 11px;
+            margin: 0 auto 4px;
+        }
+
+        .pod-name { font-size: 10px; font-weight: 800; }
+        .pod-score { font-size: 17px; font-weight: 900; color: var(--accent-green); }
+
+        .leader-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 9px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .leader-left { display: flex; align-items: center; gap: 10px; }
+        .leader-rank { font-size: 12px; font-weight: 800; color: var(--text-muted); }
+
+        /* Bottom Fixed Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: #111d27;
+            border-top: 1px solid #1a2a38;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            z-index: 99999;
+        }
+
+        .nav-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            color: #8492a6;
+            font-size: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            position: relative;
+            background: transparent;
+            border: none;
+        }
+
+        .nav-btn.active { color: #06b6d4; }
+        .nav-btn .nav-icon { font-size: 18px; }
+
+        .nav-badge {
+            position: absolute;
+            top: 6px;
+            right: 20%;
+            background: #0284c7;
+            color: white;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 1px 5px;
+            border-radius: 10px;
+        }
+
+        /* Sidebar */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 100000;
+            display: none;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 270px;
+            height: 100%;
+            background: #111d27;
+            border-right: 1px solid #1a2a38;
+            z-index: 100001;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            padding: 16px;
+        }
+
+        .sidebar-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: 900;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #1a2a38;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            border-radius: 8px;
+            background: #0c1620;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .sidebar-link.whatsapp { background: #065f46; color: #ffffff; }
+        .sidebar-link.logout { background: #7f1d1d; color: #ffffff; }
+
+        .toast {
+            position: fixed;
+            bottom: 75px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: white;
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 800;
+            border: 1px solid #334155;
+            z-index: 999999;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. LOGIN SCREEN -->
+    <div class="login-container" id="loginWrapper">
+        <div class="login-box">
+            <div class="login-title">Hunter <span>Team</span></div>
+            <div class="login-sub">✦ SECURE SMS MANAGEMENT PORTAL ✦</div>
+
+            <form id="loginForm" onsubmit="return handleFormLogin(event)">
+                <div class="field-group">
+                    <label class="field-lbl">USERNAME</label>
+                    <input type="text" class="login-input" id="loginUser" placeholder="Enter Username" required autocomplete="username">
+                </div>
+
+       
